@@ -1,0 +1,52 @@
+/* Custom styles for the checkout page */
+.checkout-page {
+    max-width: 1200px;
+}
+
+.checkout-card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-summary {
+    position: sticky;
+    top: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-summary .list-group-item {
+    padding: 1rem 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .checkout-summary {
+        position: static;
+        margin-top: 2rem;
+    }
+}
+
+/* Form styling */
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Payment method cards */
+.payment-method-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.payment-method-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.payment-method-card.active {
+    border: 2px solid #0d6efd;
+    background-color: rgba(13, 110, 253, 0.05);
+}

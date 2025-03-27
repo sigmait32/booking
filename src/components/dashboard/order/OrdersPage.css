@@ -1,0 +1,68 @@
+/* Animations */
+.order-card {
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Delayed animations for each card */
+.order-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.order-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.order-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.order-card:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.product-thumbnail {
+    width: 60px;
+    height: 60px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 4px;
+    transition: transform 0.3s ease;
+}
+
+.product-thumbnail:hover {
+    transform: scale(1.1);
+}
+
+.empty-orders {
+    background-color: #f8f9fa;
+    border: 2px dashed #dee2e6;
+}
+
+.help-section {
+    background-color: #f8f9fa;
+    border: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .order-summary {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+    }
+}
+
+.progress-bar {
+    transition: width 1s ease;
+}
