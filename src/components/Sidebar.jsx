@@ -214,7 +214,9 @@ const SideBar = () => {
                 subItems: [{ title: 'Stock History', link: '/dashboard/stock-history' }]
             },
             {
-                title: 'Customers', icon: 'fa-solid fa-users', subItems: [
+                title: 'Users', icon: 'fa-solid fa-users', subItems: [
+                    { title: 'Add Employee', link: '/dashboard/add-employee' },
+                    { title: 'Employee List', link: '/dashboard/employee-list' },
                     { title: 'Add Customer', link: '/dashboard/add-customer' },
                     { title: 'Customer List', link: '/dashboard/customer-list' },
                 ]
@@ -223,11 +225,21 @@ const SideBar = () => {
             // Inventory
             { title: 'Change Password', icon: 'fa-solid fa-key', link: '/dashboard/change-password' },
             { title: 'Order History', icon: 'fas fa-history', link: '/dashboard/order-list' },
-            { title: 'Blog', icon: 'fa-solid fa-envelope', subItems: [{ title: 'Post List', link: '/dashboard/post-list' }] },
+            // { title: 'Blog', icon: 'fa-solid fa-envelope', subItems: [{ title: 'Post List', link: '/dashboard/post-list' }] },
         ],
 
         employee: [
             { title: 'Dashboard', icon: 'fa-solid fa-chart-line', link: '/dashboard' },
+            {
+                title: 'Purchases & Sales',
+                icon: 'fa-solid fa-shopping-cart',
+                subItems: [
+                    { title: 'Purchase Entry', icon: 'fa-solid fa-cart-plus', link: '/dashboard/purchase-entry' },
+                    { title: 'Sale & Service Entry', icon: 'fa-solid fa-cash-register', link: '/dashboard/sale-service-entry' },
+                    { title: 'Sale Return', icon: 'fa-solid fa-undo-alt', link: '/dashboard/sale-return' },
+                    { title: 'Purchase Return', icon: 'fa-solid fa-reply', link: '/dashboard/purchase-return' },
+                ]
+            },
             // { title: 'Products', icon: 'fa-solid fa-truck-fast', link: '/dashboard/products' },
             { title: 'Products', icon: 'fa-solid fa-truck-fast', link: '/dashboard/cart-products' },
             { title: 'My Order', icon: ' fa-solid fa-list-alt', link: '/dashboard/my-orders' },

@@ -122,7 +122,7 @@ const LogoList = () => {
                 <div className="col">
                     <div className="bg-white px-4 py-5 rounded-3">
                         <div className="d-flex justify-content-between align-items-center mb-4">
-                            <Link to="/dashboard/add-logo" className="btn btn-primary">+ Add Logo</Link>
+                            {/* <Link to="/dashboard/add-logo" className="btn btn-primary">+ Add Logo</Link> */}
                             <input
                                 className="form-control w-50"
                                 type="text"

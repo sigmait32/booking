@@ -36,6 +36,8 @@ import cartReducer from "./features/cart/cartSlice";
 import { cartApi } from "./features/cart/cartApi";
 import { orderApi } from './features/order/orderApi';
 import { customerApi } from './features/customer/customerApi';
+import { dashboardApi } from './features/dashboard/dashboardApi';
+import { employeeApi } from './features/employee/employeeApi';
 const rootReducer = combineReducers({
     auth: authReducer,
     posts: postsReducer,
@@ -54,6 +56,8 @@ const rootReducer = combineReducers({
     [cartApi.reducerPath]: cartApi.reducer,
     [orderApi.reducerPath]: orderApi.reducer,
     [customerApi.reducerPath]: customerApi.reducer,
+    [dashboardApi.reducerPath]: dashboardApi.reducer,
+    [employeeApi.reducerPath]: employeeApi.reducer,
 });
 
 export default rootReducer;

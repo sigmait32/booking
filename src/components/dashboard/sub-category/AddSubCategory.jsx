@@ -94,7 +94,7 @@ const AddSubCategory = () => {
             category,
         };
 
-        console.log("Frontend form data ======>", formData);
+        // console.log("Frontend form data ======>", formData);
 
         try {
             // Pass formData directly to the action

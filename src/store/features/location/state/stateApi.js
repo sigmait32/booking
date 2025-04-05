@@ -19,6 +19,10 @@ export const stateApi = createApi({
             query: (id) => `state/${id}`,
             providesTags: (result, error, id) => [{ type: 'State', id }],
         }),
+        getStateByCountryId: builder.query({
+            query: (id) => `state/get-state-by-country/${id}`,
+            providesTags: (result, error, id) => [{ type: 'State', id }],
+        }),
         addState: builder.mutation({
             query: (stateData) => ({
                 url: 'state',
@@ -51,6 +55,7 @@ export const stateApi = createApi({
 export const {
     useGetStateQuery,
     useGetStateByIdQuery,
+    useGetStateByCountryIdQuery,
     useAddStateMutation,
     useUpdateStateMutation,
     useDeleteStateMutation,

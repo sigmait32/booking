@@ -29,6 +29,8 @@ import { categoryApi } from './features/category/categoryApi';
 import { cartApi } from "./features/cart/cartApi";
 import { orderApi } from './features/order/orderApi';
 import { customerApi } from './features/customer/customerApi';
+import { dashboardApi } from './features/dashboard/dashboardApi';
+import { employeeApi } from './features/employee/employeeApi';
 
 
 const store = configureStore({
@@ -44,7 +46,9 @@ const store = configureStore({
             .concat(categoryApi.middleware)
             .concat(cartApi.middleware)
             .concat(orderApi.middleware)
-            .concat(customerApi.middleware),
+            .concat(customerApi.middleware)
+            .concat(dashboardApi.middleware)
+            .concat(employeeApi.middleware),
     devTools: true,
 });
 

@@ -1,3 +1,5 @@
+
+
 // import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // // Base query with credentials
@@ -12,17 +14,33 @@
 //     tagTypes: ["Order"],
 
 //     endpoints: (builder) => ({
-//         // Fetch all orders for the logged-in user
+//         // Fetch all orders
 //         getOrders: builder.query({
 //             query: () => "order/list",
 //             providesTags: ["Order"],
 //         }),
 
+//         getEmployeeOrders: builder.query({
+//             query: () => "order/get-employee-order-list",
+//             providesTags: ["Order"],
+//         }),
+
+//         // Fetch order by ID
+//         getOrderById: builder.query({
+//             query: (orderId) => `order/${orderId}`,
+//             providesTags: ["Order"],
+//         }),
+//         // Fetch order by ID
+//         getCustomerOrderById: builder.query({
+//             query: (orderId) => `order/customer-order/${orderId}`,
+//             providesTags: ["Order"],
+//         }),
 
 
+//         // Update order status
 //         updateOrderStatus: builder.mutation({
 //             query: ({ id, status }) => ({
-//                 url: `order/update/${id}`, // Use `id` instead of `orderId`
+//                 url: `order/update/${id}`, // Ensure the correct endpoint
 //                 method: "PATCH",
 //                 body: { status },
 //             }),
@@ -32,7 +50,7 @@
 //         // Delete an order
 //         deleteOrder: builder.mutation({
 //             query: (orderId) => ({
-//                 url: `orders/${orderId}`,
+//                 url: `order/${orderId}`, // Ensure consistency
 //                 method: "DELETE",
 //             }),
 //             invalidatesTags: ["Order"],
@@ -41,7 +59,15 @@
 // });
 
 // // Export hooks for usage in components
-// export const { useGetOrdersQuery, useUpdateOrderStatusMutation, useDeleteOrderMutation } = orderApi;
+// export const {
+//     useGetOrdersQuery,
+//     getEmployeeOrders,
+//     useGetOrderByIdQuery, // New hook for fetching order by ID
+//     useGetCustomerOrderByIdQuery,
+//     useUpdateOrderStatusMutation,
+//     useDeleteOrderMutation,
+// } = orderApi;
+
 
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
@@ -63,9 +89,29 @@ export const orderApi = createApi({
             providesTags: ["Order"],
         }),
 
+        // Fetch all employee orders
+        getEmployeeOrders: builder.query({
+            query: () => "order/get-employee-order-list",
+            keepUnusedDataFor: 0,
+            providesTags: ["Order"], // Ensures data refresh when an order changes
+        }),
+
         // Fetch order by ID
         getOrderById: builder.query({
             query: (orderId) => `order/${orderId}`,
+            providesTags: ["Order"],
+        }),
+
+        getEmpOrderDtlById: builder.query({
+            query: (orderId) => `order/employee-order-detail/${orderId}`,
+            providesTags: ["Order"],
+        }),
+
+
+
+        // Fetch customer order by ID
+        getCustomerOrderById: builder.query({
+            query: (orderId) => `order/customer-order/${orderId}`,
             providesTags: ["Order"],
         }),
 
@@ -93,7 +139,10 @@ export const orderApi = createApi({
 // Export hooks for usage in components
 export const {
     useGetOrdersQuery,
-    useGetOrderByIdQuery, // New hook for fetching order by ID
+    useGetEmpOrderDtlByIdQuery,
+    useGetEmployeeOrdersQuery, // Corrected this export
+    useGetOrderByIdQuery,
+    useGetCustomerOrderByIdQuery,
     useUpdateOrderStatusMutation,
     useDeleteOrderMutation,
 } = orderApi;

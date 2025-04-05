@@ -1,131 +1,6 @@
 
 
 
-// import React, { useState } from 'react';
-// import { Form, Button, Container, Row, Col, Card, Spinner } from 'react-bootstrap';
-// import { clearCart } from '../../../store/features/cart/cartSlice';
-// import { useCheckoutMutation } from '../../../store/features/cart/cartApi';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { useNavigate } from 'react-router-dom';
-
-// const CheckoutPage = () => {
-//     const [formData, setFormData] = useState({
-//         name: '',
-//         address: '67e28e1b2725b21bb3619aac',
-//         payment: 'credit',
-//     });
-//     const [checkout, { isLoading }] = useCheckoutMutation();
-//     const { userInfo } = useSelector(state => state.auth);
-//     const cartItems = useSelector(state => state.cart.items);
-//     const dispatch = useDispatch();
-//     const navigate = useNavigate();
-
-
-//     console.log("userInfo ==================>", userInfo)
-//     const calculateTotal = () => {
-//         return cartItems.reduce(
-//             (total, item) => total + item.price * item.quantity, 0
-//         ).toFixed(2);
-//     };
-
-
-
-//     const handleSubmit = async (e) => {
-//         e.preventDefault();
-//         try {
-//             const orderData = {
-//                 userId: userInfo?.id,
-//                 items: cartItems,
-//                 shippingInfo: formData,
-//                 address: '67e28e1b2725b21bb3619aac',
-//                 paymentMethod: "Credit Card",
-//                 total: calculateTotal(),
-//             };
-//             console.log("Card orderData is =========>", orderData)
-
-//             const result = await checkout(orderData).unwrap();
-//             dispatch(clearCart());
-//             setTimeout(() => {
-//                 navigate(`/dashboard/order-complete/`);
-//             }, 500)
-//             // navigate(`/dashboard/order-complete/${result.orderId}`);
-//         } catch (err) {
-//             console.error("Checkout failed:", err);
-//         }
-//     };
-
-//     const handleChange = (e) => {
-//         const { name, value } = e.target;
-//         setFormData(prev => ({ ...prev, [name]: value }));
-//     };
-
-//     return (
-//         <Container className="mt-5">
-//             <Row className="justify-content-center">
-//                 <Col md={8}>
-//                     <Card className="p-4 shadow-lg">
-//                         <Card.Body>
-//                             <h2 className="text-center mb-4">Checkout</h2>
-//                             <Form onSubmit={handleSubmit}>
-//                                 <Form.Group className="mb-3">
-//                                     <Form.Label>Full Name</Form.Label>
-//                                     <Form.Control
-//                                         type="text"
-//                                         name="name"
-//                                         placeholder="Enter your full name"
-//                                         value={formData.name}
-//                                         onChange={handleChange}
-//                                         required
-//                                     />
-//                                 </Form.Group>
-
-//                                 <Form.Group className="mb-3">
-//                                     <Form.Label>Shipping Address</Form.Label>
-//                                     <Form.Control
-//                                         as="textarea"
-//                                         name="address"
-//                                         placeholder="Enter your shipping address"
-//                                         value={formData.address}
-//                                         onChange={handleChange}
-//                                         required
-//                                     />
-//                                 </Form.Group>
-
-//                                 <Form.Group className="mb-3">
-//                                     <Form.Label>Payment Method</Form.Label>
-//                                     <Form.Select name="payment" value={formData.payment} onChange={handleChange}>
-//                                         <option value="credit">Credit Card</option>
-//                                         <option value="paypal">PayPal</option>
-//                                         <option value="bank">Bank Transfer</option>
-//                                     </Form.Select>
-//                                 </Form.Group>
-
-//                                 <Card className="p-3 mb-3">
-//                                     <h4>Order Summary</h4>
-//                                     <p>Total Items: {cartItems.length}</p>
-//                                     <p className="fw-bold">Total Amount: ${calculateTotal()}</p>
-//                                 </Card>
-
-//                                 <Button
-//                                     variant="primary"
-//                                     type="submit"
-//                                     disabled={isLoading || cartItems.length === 0}
-//                                     className="w-100"
-//                                 >
-//                                     {isLoading ? <Spinner animation="border" size="sm" /> : 'Place Order'}
-//                                 </Button>
-//                             </Form>
-//                         </Card.Body>
-//                     </Card>
-//                 </Col>
-//             </Row>
-//         </Container>
-//     );
-// };
-
-// export default CheckoutPage;
-
-
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Row, Col, Card, Spinner, Modal, Alert } from 'react-bootstrap';
 import { clearCart } from '../../../store/features/cart/cartSlice';
@@ -135,6 +10,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // 
+import { useGetStateQuery } from "../../../store/features/location/state/stateApi";
+import { useGetCityByStateIdQuery } from "../../../store/features/location/city/cityApi";
 
 
 const CheckoutPage = () => {
@@ -152,6 +29,8 @@ const CheckoutPage = () => {
         gst_number: ''
     });
 
+
+
     const [validated, setValidated] = useState(false);
     const [showCustomerSearch, setShowCustomerSearch] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
@@ -160,7 +39,16 @@ const CheckoutPage = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [isNewCustomer, setIsNewCustomer] = useState(false);
 
+    console.log("ormData id  =>", formData.customerId)
     // API hooks
+
+    const { data: stateList } = useGetStateQuery();
+    const [selectedState, setSelectedState] = useState("");
+
+    // Fetch cities only when a state is selected
+    const { data: cityList } = useGetCityByStateIdQuery(selectedState, {
+        skip: !selectedState, // Skip fetching if no state is selected
+    });
     const [checkout, { isLoading }] = useCheckoutMutation();
     const [addCustomer, { isLoading: isAddingCustomer }] = useAddCustomerMutation();
     const [updateCustomer, { isLoading: isUpdatingCustomer }] = useUpdateCustomerMutation();
@@ -195,8 +83,10 @@ const CheckoutPage = () => {
         ).toFixed(2);
     };
 
-    // Handle selecting an existing customer
+
+
     const handleSelectCustomer = (customer) => {
+        console.log("search customer data is ========>", customer)
         setFormData({
             ...formData,
             customerId: customer._id,
@@ -206,14 +96,17 @@ const CheckoutPage = () => {
             gst_number: customer.gst_number,
             mobileNo: customer.mobileNo,
             address: customer.address,
-            city: customer.city,
-            state: customer.state
+            city: customer.city._id || customer.city, // Handle both object and ID cases
+            state: customer.state._id || customer.state // Handle both object and ID cases
         });
+
+        // Set the selected state to trigger city loading
+        setSelectedState(customer.state._id || customer.state);
+
         setIsEditing(false);
         setIsNewCustomer(false);
         setShowCustomerSearch(false);
     };
-
     // Clear search and form
     const clearSearch = () => {
         setSearchTerm('');
@@ -237,17 +130,21 @@ const CheckoutPage = () => {
             };
 
             const result = await addCustomer(customerData).unwrap();
+            toast.success(result.message || "Customer added successfully!", { position: "top-center", });
+            // console.log("add customer is =====>", result?.user?.id)
 
             setFormData(prev => ({
                 ...prev,
-                customerId: result._id
+                customerId: result?.user?.id
             }));
             setIsNewCustomer(true);
             setIsEditing(false);
             setCustomerAddError('');
             return result;
         } catch (err) {
-            setCustomerAddError(err.data?.error || 'Failed to add customer');
+            console.log("error is ========>", err.data.error)
+            toast.error(err.data.error || " Email or mobile number already exists", { position: "top-center", });
+            // setCustomerAddError(err.data?.error || 'Failed to add customer');
             throw err;
         }
     };
@@ -301,65 +198,73 @@ const CheckoutPage = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+
+        if (name === "state") {
+            setSelectedState(value);
+            setFormData(prev => ({
+                ...prev,
+                city: "",
+            }));
+        }
     };
 
-    // Handle placing the order
+
     const placeOrder = async (e) => {
         e.preventDefault();
 
-        if (!formData.customerId) {
-            alert('Please save customer details first');
+        // ✅ Ensure customer details are saved before proceeding
+        if (!formData?.customerId) {
+            toast.warning("Please save customer details first.");
             return;
         }
 
         try {
-            // const orderData = {
-            //     userId: userInfo?.id,
-            //     items: cartItems,
-            //     shippingInfo: formData,
-            //     customerId: formData.customerId,
-            //     paymentMethod: formData.payment,
-            //     total: calculateTotal(),
-            // };
-
-            // const orderData = {
-            //     employeeId: userInfo?.id,
-            //     items: cartItems,
-            //     shippingInfo: formData,
-            //     address: formData.address,
-            //     customerId: formData.customerId,
-            //     // paymentMethod: "Cash on Delivery",
-            //     total: calculateTotal(),
-            // };
-
+            // ✅ Prepare order data
             const orderData = {
-                employeeId: userInfo?.id,
+                employeeId: userInfo?.id || "N/A", // Prevents undefined employeeId
                 customerId: formData.customerId,
-                items: cartItems,
-                shippingInfo: formData,  // ✅ Contains address, payment, etc.
-                // paymentMethod: formData.payment, // ✅ Dynamically set payment method
-
-                total: calculateTotal(), // ✅ Calculated once for better performance
+                items: cartItems?.length ? cartItems : [], // Ensures cart is not empty
+                shippingInfo: formData,
+                total: calculateTotal(), // Avoids redundant calculations
             };
 
+            // console.log("📝 Order Data:", orderData);
 
+            // ✅ Send order request
+            const response = await checkout(orderData).unwrap();
 
-            console.log("customer id is ========>", formData.customerId,)
+            // console.log("✅ Order Response:", response);
 
-            const result = await checkout(orderData).unwrap();
+            if (response?.success) {
+                toast.success(response.message || "Your order has been placed successfully! 🎉", {
+                    position: "top-center",
+                    autoClose: 3000,
+                });
 
-            dispatch(clearCart());
-            toast.success('Your order has been placed successfully! 🎉', {
-                position: "top-center", // Centers the toast
-                autoClose: 3000, // Closes after 3 seconds
-            });
-            setTimeout(() => {
-                navigate(`/dashboard/order-complete/`);
-            }, 500);
+                // ✅ Ensure navigation only happens if the order ID exists
+                setTimeout(() => {
+                    const orderId = response?.order?.orderId;
+                    if (orderId) {
+                        navigate(`/dashboard/order-complete/${orderId}`);
+                    } else {
+                        console.error("🚨 Order ID missing in response:", response);
+                    }
+                }, 500);
+
+                // ✅ Clear cart after successful order
+                dispatch(clearCart());
+            } else {
+                console.error("⚠️ Order failed:", response);
+                toast.error(response?.message || "Something went wrong, please try again.");
+            }
         } catch (err) {
-            console.error("Checkout failed:", err);
+            console.error("❌ Checkout failed:", err);
+
+            // ✅ Provide user-friendly error messages
+            toast.error(err?.data?.message || "Order could not be placed. Please try again.");
         }
     };
+
 
     // Enable editing mode
     const enableEditing = () => {
@@ -595,8 +500,10 @@ const CheckoutPage = () => {
                                                 disabled={formData.customerId && !isEditing}
                                             >
                                                 <option value="">Select City</option>
-                                                {cities.map((city, index) => (
-                                                    <option key={index} value={city}>{city}</option>
+                                                {cityList?.map((item) => (
+                                                    <option key={item._id} value={item._id}>
+                                                        {item.name}
+                                                    </option>
                                                 ))}
                                             </Form.Select>
                                             <Form.Control.Feedback type="invalid">
@@ -613,13 +520,16 @@ const CheckoutPage = () => {
                                                 name="state"
                                                 value={formData.state}
                                                 onChange={handleChange}
+
                                                 required
                                                 className="form-select-lg"
                                                 disabled={formData.customerId && !isEditing}
                                             >
                                                 <option value="">Select State</option>
-                                                {states.map((state, index) => (
-                                                    <option key={index} value={state}>{state}</option>
+                                                {stateList?.map((item, index) => (
+                                                    <option key={item._id} value={item._id}>
+                                                        {item.name}
+                                                    </option>
                                                 ))}
                                             </Form.Select>
                                             <Form.Control.Feedback type="invalid">
@@ -742,6 +652,7 @@ const CheckoutPage = () => {
                                 variant="primary"
                                 type="button"
                                 disabled={isLoading || cartItems.length === 0 || !formData.customerId || isEditing}
+                                // disabled={isLoading || cartItems.length === 0 || !formData.customerId || isEditing}
                                 className="w-100 py-3 fw-bold"
                                 size="lg"
                                 onClick={placeOrder}

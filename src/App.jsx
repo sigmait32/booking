@@ -181,6 +181,15 @@ import OrderDetails from "./components/dashboard/order/OrderDetail";
 
 import StockList from "./components/dashboard/stock";
 
+import EmployeeList from "./components/dashboard/employee/List";
+import EditEmployee from "./components/dashboard/employee/Edit";
+import AddEmployee from "./components/dashboard/employee/Add";
+import MyOrderDetail from "./components/dashboard/order/MyOrderDetail";
+import SaleService from "./components/dashboard/billing/sale-service";
+import PurchaseEntry from "./components/dashboard/billing/purchase";
+import SaleReturn from "./components/dashboard/billing/sale-return";
+import PurchaseReturn from "./components/dashboard/billing/purchase-return";
+
 function App() {
   return (
     <BrowserRouter>
@@ -205,14 +214,23 @@ function App() {
 
               <Route path="cart" element={<Cart />} />
               <Route path="checkout" element={<Checkout />} />
-              <Route path="order-complete" element={<OrderCompletePage />} />
+              <Route path="order-complete/:id" element={<OrderCompletePage />} />
               <Route path="my-orders" element={<MyOrder />} />
+              <Route path="my-order-detail/:id" element={<MyOrderDetail />} />
 
 
               <Route path="customer-list" element={<CustomerList />} />
               <Route path="add-customer" element={<AddCustomer />} />
-
               <Route path="edit-customer/:id" element={<EditCustomer />} />
+
+              <Route path="employee-list" element={<EmployeeList />} />
+              <Route path="add-employee" element={<AddEmployee />} />
+              <Route path="edit-employee/:id" element={<EditEmployee />} />
+              <Route path="sale-service-entry" element={<SaleService />} />
+              <Route path="purchase-entry" element={<PurchaseEntry />} />
+              <Route path="sale-return" element={<SaleReturn />} />
+              <Route path="purchase-return" element={<PurchaseReturn />} />
+
             </Route>
 
             {/* Admin Only */}

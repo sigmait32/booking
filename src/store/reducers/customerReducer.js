@@ -13,6 +13,7 @@ export const addCustomer = createAsyncThunk('customer/add', async (customerData)
 });
 
 export const updateCustomer = createAsyncThunk('customer/update', async ({ id, customerData }) => {
+    // console.log("Sending Data to Backend:", JSON.stringify(customerData, null, 2)); // ✅ Debug log
     const response = await api.put(`/customer/update/${id}`, customerData);
     return response.data;
 });
