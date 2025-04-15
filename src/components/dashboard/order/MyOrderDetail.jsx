@@ -269,26 +269,30 @@ const MyOrderDetail = () => {
                                 <tbody>
                                     <tr>
                                         <td><strong>Subtotal:</strong></td>
-                                        <td className="text-end">₹{order.subTotal?.toFixed(2) || '0.00'}</td>
+                                        <td className="text-end">₹{order.totalPrice?.toFixed(2) || '0.00'}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Discount:</strong></td>
+                                        <td className="text-end">₹{order.discount?.toFixed(2) || '0.00'}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Shipping:</strong></td>
-                                        <td className="text-end">₹{order.shippingPrice?.toFixed(2) || '0.00'}</td>
+                                        <td className="text-end">₹{order.shipping?.toFixed(2) || '0.00'}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Tax:</strong></td>
-                                        <td className="text-end">₹{order.taxPrice?.toFixed(2) || '0.00'}</td>
+                                        <td className="text-end">₹{order.tax?.toFixed(2) || '0.00'}</td>
                                     </tr>
                                     <tr className="fw-bold fs-5 border-top">
                                         <td><strong>Total:</strong></td>
-                                        <td className="text-end">₹{order.totalPrice?.toFixed(2) || '0.00'}</td>
+                                        <td className="text-end">₹{order.totalAfterDiscount?.toFixed(2) || '0.00'}</td>
                                     </tr>
                                 </tbody>
                             </Table>
                         </Col>
                     </Row>
                 </Card.Body>
-                <Card.Footer className="d-flex justify-content-between bg-light">
+                {/* <Card.Footer className="d-flex justify-content-between bg-light">
                     <Button variant="outline-primary">
                         <i className="fas fa-print me-2"></i> Print Invoice
                     </Button>
@@ -302,7 +306,7 @@ const MyOrderDetail = () => {
                             <i className="fas fa-headset me-1"></i> Contact Support
                         </Button>
                     </div>
-                </Card.Footer>
+                </Card.Footer> */}
             </Card>
 
             {/* Order History Timeline */}

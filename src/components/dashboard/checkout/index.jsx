@@ -59,9 +59,7 @@ const CheckoutPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // Location data
-    const cities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Lucknow'];
-    const states = ['Maharashtra', 'Delhi', 'Karnataka', 'Telangana', 'Tamil Nadu', 'Uttar Pradesh'];
+
 
     // Search customers when search term changes
     useEffect(() => {
@@ -86,7 +84,7 @@ const CheckoutPage = () => {
 
 
     const handleSelectCustomer = (customer) => {
-        console.log("search customer data is ========>", customer)
+
         setFormData({
             ...formData,
             customerId: customer._id,
@@ -489,31 +487,6 @@ const CheckoutPage = () => {
                                     <Col md={6} className="mb-3">
                                         <Form.Group>
                                             <Form.Label className="fw-medium">
-                                                City <span className="text-danger">*</span>
-                                            </Form.Label>
-                                            <Form.Select
-                                                name="city"
-                                                value={formData.city}
-                                                onChange={handleChange}
-                                                required
-                                                className="form-select-lg"
-                                                disabled={formData.customerId && !isEditing}
-                                            >
-                                                <option value="">Select City</option>
-                                                {cityList?.map((item) => (
-                                                    <option key={item._id} value={item._id}>
-                                                        {item.name}
-                                                    </option>
-                                                ))}
-                                            </Form.Select>
-                                            <Form.Control.Feedback type="invalid">
-                                                Please select customer city.
-                                            </Form.Control.Feedback>
-                                        </Form.Group>
-                                    </Col>
-                                    <Col md={6} className="mb-3">
-                                        <Form.Group>
-                                            <Form.Label className="fw-medium">
                                                 State <span className="text-danger">*</span>
                                             </Form.Label>
                                             <Form.Select
@@ -537,6 +510,32 @@ const CheckoutPage = () => {
                                             </Form.Control.Feedback>
                                         </Form.Group>
                                     </Col>
+                                    <Col md={6} className="mb-3">
+                                        <Form.Group>
+                                            <Form.Label className="fw-medium">
+                                                City <span className="text-danger">*</span>
+                                            </Form.Label>
+                                            <Form.Select
+                                                name="city"
+                                                value={formData.city}
+                                                onChange={handleChange}
+                                                required
+                                                className="form-select-lg"
+                                                disabled={formData.customerId && !isEditing}
+                                            >
+                                                <option value="">Select City</option>
+                                                {cityList?.map((item) => (
+                                                    <option key={item._id} value={item._id}>
+                                                        {item.name}
+                                                    </option>
+                                                ))}
+                                            </Form.Select>
+                                            <Form.Control.Feedback type="invalid">
+                                                Please select customer city.
+                                            </Form.Control.Feedback>
+                                        </Form.Group>
+                                    </Col>
+
                                 </Row>
 
                                 {/* Payment Method */}

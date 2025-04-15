@@ -251,7 +251,7 @@ const AddCustomer = () => {
         }
     }, [addStatus, dispatch, navigate, error]);
 
-    console.log("form data is ==========>", formData)
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;

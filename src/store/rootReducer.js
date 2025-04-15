@@ -38,6 +38,7 @@ import { orderApi } from './features/order/orderApi';
 import { customerApi } from './features/customer/customerApi';
 import { dashboardApi } from './features/dashboard/dashboardApi';
 import { employeeApi } from './features/employee/employeeApi';
+import { saleEntryApi } from './features/sale-service/saleEntryApi';
 const rootReducer = combineReducers({
     auth: authReducer,
     posts: postsReducer,
@@ -58,6 +59,7 @@ const rootReducer = combineReducers({
     [customerApi.reducerPath]: customerApi.reducer,
     [dashboardApi.reducerPath]: dashboardApi.reducer,
     [employeeApi.reducerPath]: employeeApi.reducer,
+    [saleEntryApi.reducerPath]: saleEntryApi.reducer,
 });
 
 export default rootReducer;

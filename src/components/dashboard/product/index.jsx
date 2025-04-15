@@ -47,146 +47,7 @@
 
 //     // Columns for the DataTable
 //     const columns = [
-//         {
-//             name: "#",
-//             selector: (row, index) => (currentPage - 1) * itemsPerPage + index + 1,
-//             sortable: true,
-//         },
-//         {
-//             name: "Image",
-//             cell: (row) => (
-//                 <img
-//                     src={`${BASE_URL}${row?.images?.[0]?.url || "/default-img.png"}`}
-//                     alt={row.name}
-//                     style={{ width: "50px", height: "50px", borderRadius: "8px", objectFit: "cover" }}
-//                 />
-//             ),
-//         },
-//         {
-//             name: "Name",
-//             selector: (row) => row.name,
-//             sortable: true,
-//         },
-//         {
-//             name: "Price",
-//             selector: (row) => `$${row.price}`,
-//             sortable: true,
-//         },
-//         {
-//             name: "Category",
-//             selector: (row) => row.category?.name || "N/A", // Access the `name` property of the category object
-//             sortable: true,
-//         },
-//         {
-//             name: "Subcategory",
-//             selector: (row) => row.subCategory?.name || "N/A", // Access the `name` property of the subcategory object
-//             sortable: true,
-//         },
-//         {
-//             name: "Stock",
-//             selector: (row) => row.stock,
-//             sortable: true,
-//         },
-//         {
-//             name: "Actions",
-//             cell: (row) => (
-//                 <div style={{ display: "flex", gap: "8px" }}>
-//                     <Link to={`/dashboard/edit-product/${row._id}`} className="btn btn-sm btn-primary">
-//                         Edit
-//                     </Link>
-//                     <button
-//                         className="btn btn-sm btn-danger"
-//                         onClick={() => handleDelete(row._id)}
-//                     >
-//                         Delete
-//                     </button>
-//                 </div>
-//             ),
-//             width: "150px", // Fixed width for the Actions column
-//         },
-//     ];
 
-//     // Show loading spinner while data is being fetched
-//     if (isLoading) {
-//         return (
-//             <div className="text-center py-5">
-//                 <div className="spinner-border text-primary" role="status">
-//                     <span className="visually-hidden">Loading...</span>
-//                 </div>
-//             </div>
-//         );
-//     }
-
-//     // Show error message if there's an error
-//     if (error) {
-//         return (
-//             <div className="text-center py-5">
-//                 <div className="alert alert-danger" role="alert">
-//                     Failed to load products. Please try again later.
-//                 </div>
-//             </div>
-//         );
-//     }
-
-//     return (
-//         <>
-//             <ToastContainer />
-//             <div className="container-fluid">
-//                 <div className="row row-cols-1 g-3 g-md-5">
-//                     <div className="col">
-//                         <div className="bg-white px-4 py-5 rounded-3">
-//                             <div className="d-flex justify-content-between align-items-center mb-4">
-//                                 <Link to="/dashboard/add-product" className="btn btn-primary">
-//                                     + Add Product
-//                                 </Link>
-//                                 <input
-//                                     className="form-control w-50"
-//                                     type="text"
-//                                     value={searchTerm}
-//                                     onChange={(e) => setSearchTerm(e.target.value)}
-//                                     placeholder="Search products..."
-//                                 />
-//                             </div>
-//                         </div>
-//                     </div>
-
-//                     <div className="col">
-//                         <div className="bg-white rounded-3 shadow-sm p-3">
-//                             <DataTable
-//                                 columns={columns}
-//                                 data={currentItems}
-//                                 pagination
-//                                 paginationServer
-//                                 paginationTotalRows={filteredProducts?.length}
-//                                 paginationPerPage={itemsPerPage}
-//                                 paginationDefaultPage={currentPage}
-//                                 onChangePage={setCurrentPage}
-//                                 noDataComponent={<div className="text-center py-4">No products found</div>}
-//                                 customStyles={{
-//                                     headCells: {
-//                                         style: {
-//                                             backgroundColor: "#f8f9fa",
-//                                             fontWeight: "bold",
-//                                         },
-//                                     },
-//                                     rows: {
-//                                         style: {
-//                                             "&:hover": {
-//                                                 backgroundColor: "#f1f1f1",
-//                                             },
-//                                         },
-//                                     },
-//                                 }}
-//                             />
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-//         </>
-//     );
-// };
-
-// export default Product;
 
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -199,11 +60,16 @@ import {
 } from "../../../store/features/product/productApi";
 import BASE_URL from "../../../utils/imageConfig";
 import './ProductCart.css';
+import ConfirmDeleteModal from '../../common/ConfirmDeleteModal'
 
 const ProductManagement = () => {
     // State Management
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
+    const [showModal, setShowModal] = useState(false);
+
+    const [selectedId, setSelectedId] = useState(null);
+
     const itemsPerPage = 10;
 
     // API Hooks
@@ -232,17 +98,26 @@ const ProductManagement = () => {
     );
 
     // Handlers
-    const handleDelete = async (id) => {
-        if (window.confirm("Are you sure you want to delete this product?")) {
-            try {
-                await deleteProduct(id).unwrap();
-                toast.success("Product deleted successfully!");
-                refetch();
-            } catch (error) {
-                toast.error("Failed to delete product.");
-            }
+    const handleConfirmDelete = async () => {
+
+        try {
+            await deleteProduct(selectedId).unwrap();
+            toast.success("Product deleted successfully!");
+            refetch();
+        } catch (error) {
+            toast.error("Failed to delete product.");
+        } finally {
+            setShowModal(false);
         }
+
     };
+
+
+    const handleDeleteClick = (id) => {
+        setSelectedId(id);
+        setShowModal(true);
+    };
+
 
     // Table Configuration
     const columns = [
@@ -273,7 +148,7 @@ const ProductManagement = () => {
         },
         {
             name: "Price",
-            selector: (row) => `$${row.price.toFixed(2)}`,
+            selector: (row) => `₹${row.price.toFixed(2)}`,
             sortable: true,
             width: "120px"
         },
@@ -300,18 +175,26 @@ const ProductManagement = () => {
                     </Link>
                     <button
                         className="btn btn-sm btn-outline-danger"
-                        onClick={() => handleDelete(row._id)}
+                        onClick={() => handleDeleteClick(row._id)}
                         title="Delete product"
                     >
                         <i className="fa fa-trash"></i>
                     </button>
-                    <Link
+                    <ConfirmDeleteModal
+                        show={showModal}
+                        onHide={() => setShowModal(false)}
+                        onConfirm={handleConfirmDelete}
+                        title="Confirm Deletion"
+                        message="Are you sure you want to permanently delete this record?"
+                    />
+
+                    {/* <Link
                         to={`/product/${row._id}`}
                         className="btn btn-sm btn-outline-secondary"
                         title="View details"
                     >
                         <i className="fa fa-eye"></i>
-                    </Link>
+                    </Link> */}
                 </div>
             ),
             width: "180px"

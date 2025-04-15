@@ -73,7 +73,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // Base query with credentials
 const baseQuery = fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api/", // Base URL for all endpoints
+    baseUrl: `${import.meta.env.VITE_API_BASE_URL}/api/`,
     credentials: "include", // Equivalent to `withCredentials: true` in axios
 });
 

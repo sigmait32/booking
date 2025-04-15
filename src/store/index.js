@@ -31,6 +31,7 @@ import { orderApi } from './features/order/orderApi';
 import { customerApi } from './features/customer/customerApi';
 import { dashboardApi } from './features/dashboard/dashboardApi';
 import { employeeApi } from './features/employee/employeeApi';
+import { saleEntryApi } from './features/sale-service/saleEntryApi';
 
 
 const store = configureStore({
@@ -48,7 +49,8 @@ const store = configureStore({
             .concat(orderApi.middleware)
             .concat(customerApi.middleware)
             .concat(dashboardApi.middleware)
-            .concat(employeeApi.middleware),
+            .concat(employeeApi.middleware)
+            .concat(saleEntryApi.middleware),
     devTools: true,
 });
 

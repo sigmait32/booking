@@ -43,7 +43,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 // Base query with credentials and headers configuration
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'http://localhost:5000/api/', // Base URL for all endpoints
+    baseUrl: `${import.meta.env.VITE_API_BASE_URL}/api/`,
     credentials: 'include', // Include cookies for authentication
     prepareHeaders: (headers) => {
         // You can add any common headers here

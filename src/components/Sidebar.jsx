@@ -196,7 +196,7 @@ const SideBar = () => {
         admin: [
             { title: 'Dashboard', icon: 'fa-solid fa-chart-line', link: '/dashboard' },
             { title: 'Logo', icon: 'fa-solid fa-image', subItems: [{ title: 'Logo List', link: '/dashboard/logo-list' }] },
-            { title: 'Banner', icon: 'fa-solid fa-layer-group', subItems: [{ title: 'Banner List', link: '/dashboard/banner-list' }] },
+            // { title: 'Banner', icon: 'fa-solid fa-layer-group', subItems: [{ title: 'Banner List', link: '/dashboard/banner-list' }] },
             {
                 title: 'Location', icon: 'fa-solid fa-location-dot', subItems: [
                     { title: 'Country List', link: '/dashboard/country-list' },
@@ -214,6 +214,16 @@ const SideBar = () => {
                 subItems: [{ title: 'Stock History', link: '/dashboard/stock-history' }]
             },
             {
+                title: 'Purchases & Sales',
+                icon: 'fa-solid fa-shopping-cart',
+                subItems: [
+                    { title: 'Sale Purchase List', icon: 'fa-solid fa-cart-plus', link: '/dashboard/sale-service-list' },
+                    { title: 'Sale & Service Entry', icon: 'fa-solid fa-cash-register', link: '/dashboard/sale-service-entry' },
+
+                ]
+            },
+            // { title: 'Sale & Service Entry', icon: 'fa-solid fa-cash-register', link: '/dashboard/sale-service-entry' },
+            {
                 title: 'Users', icon: 'fa-solid fa-users', subItems: [
                     { title: 'Add Employee', link: '/dashboard/add-employee' },
                     { title: 'Employee List', link: '/dashboard/employee-list' },
@@ -230,16 +240,17 @@ const SideBar = () => {
 
         employee: [
             { title: 'Dashboard', icon: 'fa-solid fa-chart-line', link: '/dashboard' },
-            {
-                title: 'Purchases & Sales',
-                icon: 'fa-solid fa-shopping-cart',
-                subItems: [
-                    { title: 'Purchase Entry', icon: 'fa-solid fa-cart-plus', link: '/dashboard/purchase-entry' },
-                    { title: 'Sale & Service Entry', icon: 'fa-solid fa-cash-register', link: '/dashboard/sale-service-entry' },
-                    { title: 'Sale Return', icon: 'fa-solid fa-undo-alt', link: '/dashboard/sale-return' },
-                    { title: 'Purchase Return', icon: 'fa-solid fa-reply', link: '/dashboard/purchase-return' },
-                ]
-            },
+            { title: 'Sale & Service Entry', icon: 'fa-solid fa-cash-register', link: '/dashboard/sale-service-entry' },
+            // {
+            //     title: 'Purchases & Sales',
+            //     icon: 'fa-solid fa-shopping-cart',
+            //     subItems: [
+            //         { title: 'Purchase Entry', icon: 'fa-solid fa-cart-plus', link: '/dashboard/purchase-entry' },
+            //         { title: 'Sale & Service Entry', icon: 'fa-solid fa-cash-register', link: '/dashboard/sale-service-entry' },
+            //         { title: 'Sale Return', icon: 'fa-solid fa-undo-alt', link: '/dashboard/sale-return' },
+            //         { title: 'Purchase Return', icon: 'fa-solid fa-reply', link: '/dashboard/purchase-return' },
+            //     ]
+            // },
             // { title: 'Products', icon: 'fa-solid fa-truck-fast', link: '/dashboard/products' },
             { title: 'Products', icon: 'fa-solid fa-truck-fast', link: '/dashboard/cart-products' },
             { title: 'My Order', icon: ' fa-solid fa-list-alt', link: '/dashboard/my-orders' },

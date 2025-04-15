@@ -167,9 +167,14 @@ const Invoice = forwardRef(({ order }, ref) => {
                             <span>₹{order?.totalPrice?.toLocaleString() || 0}</span>
                         </div>
                         <div className="d-flex justify-content-between mb-2">
-                            <span>Shipping:</span>
-                            <span>₹{order?.shippingCost?.toLocaleString() || 0}</span>
+                            <span>Discount:</span>
+                            <span className="text-primary"> - ₹{order?.discount || 0}</span>
                         </div>
+                        <div className="d-flex justify-content-between mb-2">
+                            <span>Shipping:</span>
+                            <span>₹{order?.shipping || 0}</span>
+                        </div>
+
                         {order?.discountAmount > 0 && (
                             <div className="d-flex justify-content-between mb-2">
                                 <span>Discount:</span>
@@ -178,13 +183,13 @@ const Invoice = forwardRef(({ order }, ref) => {
                         )}
                         <div className="d-flex justify-content-between mb-2">
                             <span>Tax:</span>
-                            <span>₹{order?.taxAmount?.toLocaleString() || 0}</span>
+                            <span>₹{order?.tax || 0}</span>
                         </div>
                         <div className="d-flex justify-content-between border-top pt-3 mt-2">
-                            <strong>Grand Total:</strong>
+                            <strong>Total:</strong>
                             <strong className="h5 text-primary">
                                 <FaRupeeSign className="me-1" />
-                                {order?.grandTotal?.toLocaleString() || order?.totalPrice?.toLocaleString() || 0}
+                                {order.totalAfterDiscount || 0}
                             </strong>
                         </div>
                     </div>

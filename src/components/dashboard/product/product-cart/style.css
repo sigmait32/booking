@@ -1,0 +1,85 @@
+/* .product-image-container {
+    height: 200px;
+    overflow: hidden;
+}
+
+.product-image {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.discount-badge,
+.out-of-stock-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: #fff;
+}
+
+.discount-badge {
+    background-color: #dc3545;
+}
+
+.out-of-stock-badge {
+    background-color: #6c757d;
+}
+
+.product-title {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.product-description {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.price-container {
+    display: flex;
+    align-items: center;
+}
+
+.current-price {
+    font-weight: bold;
+    color: #000;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 0.9rem;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.quantity-btn {
+    background-color: #f1f1f1;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quantity-value {
+    font-weight: 600;
+}
+
+.add-to-cart-btn.disabled {
+    background-color: #ccc !important;
+    cursor: not-allowed;
+}
+
+.quantity-input {
+    width: 80px;
+} */

@@ -21,7 +21,7 @@
 //             }),
 //             invalidatesTags: ['Banner'],
 //         }),
-        
+
 //         updateBanner: builder.mutation({
 //             query: ({ id, formData }) => ({
 //                 url: `banner/update/${id}`,
@@ -54,7 +54,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const bannerApi = createApi({
     reducerPath: 'bannerApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/api/' }),
+    baseQuery: fetchBaseQuery({ baseUrl: `${import.meta.env.VITE_API_BASE_URL}/api/` }),
+
     tagTypes: ['Banner'],
     endpoints: (builder) => ({
         getBanners: builder.query({

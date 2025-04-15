@@ -1,102 +1,5 @@
 
 
-// import React, { useRef } from "react";
-// import { Link, useParams } from "react-router-dom";
-// import { Container, Card, Button, Alert, Badge, Stack, Spinner } from "react-bootstrap";
-// import { useGetCustomerOrderByIdQuery } from "../../../store/features/order/orderApi";
-// import Invoice from "../invoice/order-invoice";
-
-// import { useReactToPrint } from "react-to-print";
-
-// const OrderComplete = () => {
-//     const { id } = useParams();
-//     const invoiceRef = useRef(null);
-
-//     const { data: orders, isLoading, isError, error } = useGetCustomerOrderByIdQuery(id, {
-//         refetchOnMountOrArgChange: true,
-//         skip: !id
-//     });
-
-//     console.log("API Response (orders):", orders);
-
-//     const order = Array.isArray(orders) && orders.length > 0 ? orders[0] : null;
-//     console.log("Selected Order (order):", order);
-
-
-//     const handlePrint = useReactToPrint({
-//         documentTitle: 'Title',
-//         contentRef: invoiceRef,
-//     })
-
-
-//     if (isLoading) {
-//         return (
-//             <Container className="py-5 text-center">
-//                 <Spinner animation="border" variant="primary" />
-//                 <p className="mt-3">Loading order details...</p>
-//             </Container>
-//         );
-//     }
-
-//     if (isError || !order) {
-//         return (
-//             <Container className="py-5">
-//                 <Alert variant="danger" className="text-center">
-//                     <strong>Error loading order:</strong> {error?.data?.message || error?.message || "Order not found"}
-//                     <div className="mt-3">
-//                         <Button as={Link} to="/dashboard/orders" variant="outline-danger">
-//                             View Your Orders
-//                         </Button>
-//                     </div>
-//                 </Alert>
-//             </Container>
-//         );
-//     }
-
-//     return (
-//         <Container className="py-5">
-//             <Card className="border-0 shadow-sm mx-auto mb-4" style={{ maxWidth: "600px" }}>
-//                 <Card.Body className="p-4 p-md-5 text-center">
-//                     <i className="fa fa-check-circle fa-5x text-success mb-4" style={{ opacity: 0.9 }}></i>
-//                     <h1 className="h2 mb-3">Order Confirmed!</h1>
-//                     <Alert variant="success" className="d-inline-block mb-0">Thank you for your purchase!</Alert>
-
-//                     <div className="text-center p-4 mb-4 bg-light rounded-3">
-//                         <Badge bg="secondary" className="mb-3 fs-6 fw-normal">ORDER NUMBER</Badge>
-//                         <h2 className="h3 mb-3">{order?.orderId}</h2>
-//                         <p className="text-muted mb-0 fs-5">You'll receive a confirmation email shortly</p>
-//                     </div>
-
-//                     <Stack gap={3} className="mx-auto" style={{ maxWidth: "400px" }}>
-//                         <Button variant="primary" size="lg" onClick={handlePrint}>
-//                             <i className="fa fa-print me-3 fs-5"></i> Print Invoice
-//                         </Button>
-//                         <Button as={Link} to="/dashboard/cart-products" variant="outline-primary" size="lg">
-//                             <i className="fa fa-shopping-bag me-3 fs-5"></i> Continue Shopping
-//                         </Button>
-//                     </Stack>
-//                 </Card.Body>
-//             </Card>
-
-//             {/* Invoice Preview */}
-//             <Card className="border-0 shadow-sm mt-4">
-//                 <Card.Header className="bg-white"><h4 className="mb-0">Invoice Preview</h4></Card.Header>
-//                 <Card.Body>
-//                     <Invoice order={order} ref={invoiceRef} />
-//                     <div className="text-center mt-4">
-//                         <Button variant="primary" onClick={handlePrint}>
-//                             <i className="fa fa-print me-2"></i> Print Invoice
-//                         </Button>
-//                     </div>
-//                 </Card.Body>
-//             </Card>
-//         </Container>
-//     );
-// };
-
-// export default OrderComplete;
-
-
 import React, { useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Container, Card, Button, Alert, Badge, Stack, Spinner } from "react-bootstrap";
@@ -117,6 +20,7 @@ const OrderComplete = () => {
         refetchOnMountOrArgChange: true,
         skip: !id
     });
+    console.log("orders data is ===========>", orders)
 
     const order = Array.isArray(orders) && orders.length > 0 ? orders[0] : null;
 
@@ -223,6 +127,12 @@ const OrderComplete = () => {
                 <Card.Body className="p-0">
                     <Invoice order={order} ref={invoiceRef} />
                     <div className="text-center p-4 bg-light">
+                        {/* <Button variant="primary" onClick={handlePrint} className="me-3 px-4 py-2">
+                            <FaPrint className="me-2" /> Back to Home
+                        </Button> */}
+                        <Button as={Link} to="/" variant="outline-secondary" className="me-3 px-4 py-2">
+                            <FaHome className="me-2" /> Back to Home
+                        </Button>
                         <Button variant="primary" onClick={handlePrint} className="me-3 px-4 py-2">
                             <FaPrint className="me-2" /> Print Invoice
                         </Button>
